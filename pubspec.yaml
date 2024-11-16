@@ -23,3 +23,6 @@ flutter:
   assets:
     - assets/images/l0g0.png
     - assets/images/logo.svg
+    - assets/images/OnBoarding 1.svg
+    - assets/images/OnBoarding 2.svg
+    - assets/images/OnBoarding 3.svg
