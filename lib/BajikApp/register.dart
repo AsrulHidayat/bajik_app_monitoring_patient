@@ -1,8 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:bajik_app_monitoring_patient/BajikApp/register.dart';
+import 'package:intl/intl.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  DateTime? _selectedDate;
+
+  // Fungsi untuk menampilkan Bottom Sheet DatePicker
+  void _showDatePicker(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // Untuk memungkinkan ukuran penuh
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(16), // Sudut atas melengkung
+        ),
+      ),
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16),
+          height: MediaQuery.of(context).size.height * 0.5, // Tinggi 40% layar
+          child: Column(
+            children: [
+              // Header
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    "Pilih Tanggal Lahir",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.pop(context); // Tutup Bottom Sheet
+                    },
+                  ),
+                ],
+              ),
+              const Divider(),
+
+              // DatePicker
+              Expanded(
+                child: CalendarDatePicker(
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                  onDateChanged: (DateTime value) {
+                    setState(() {
+                      _selectedDate = value;
+                    });
+                    Navigator.pop(context); // Tutup Bottom Sheet
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +101,14 @@ class LoginScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                const Spacer(), // Spacer untuk mendorong konten ke tengah layar
+                const Spacer(),
 
                 // Judul dan Deskripsi
                 const Center(
                   child: Column(
                     children: [
                       Text(
-                        "Welcome Back!",
+                        "Create Account",
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -53,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        "Please log in with your NIK and password to continue.",
+                        "Fill in the details below to create a new account.",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white70,
@@ -65,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
 
-                // Field NIK dan Password
+                // Field Input
                 Column(
                   children: [
                     // Field NIK
@@ -86,14 +151,14 @@ class LoginScreen extends StatelessWidget {
                       style: const TextStyle(color: Colors.white),
                       keyboardType: TextInputType.number,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
 
-                    // Field Password
+                    // Field Nama Lengkap
                     TextField(
                       decoration: InputDecoration(
-                        labelText: "Password",
+                        labelText: "Nama Lengkap",
                         labelStyle: const TextStyle(color: Colors.white),
-                        prefixIcon: const Icon(Icons.lock, color: Colors.white),
+                        prefixIcon: const Icon(Icons.account_circle, color: Colors.white),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(32),
                           borderSide: const BorderSide(color: Colors.white),
@@ -104,51 +169,60 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                       style: const TextStyle(color: Colors.white),
-                      obscureText: true, // Menyembunyikan input password
+                      keyboardType: TextInputType.text,
+                    ),
+                    const SizedBox(height: 24),
+
+                    // Field Tanggal Lahir
+                    InkWell(
+                      onTap: () => _showDatePicker(context),
+                      child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: "Tanggal Lahir",
+                          labelStyle: const TextStyle(color: Colors.white),
+                          prefixIcon: const Icon(Icons.calendar_today, color: Colors.white),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(32),
+                            borderSide: const BorderSide(color: Colors.white),
+                          ),
+                        ),
+                        child: Text(
+                          _selectedDate == null
+                              ? "Pilih Tanggal"
+                              : DateFormat('dd-MM-yyyy').format(_selectedDate!),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 40),
 
-                    // Tombol Login
+                    // Tombol Register
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Aksi tombol login
+                          // Aksi tombol register
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(32),
                           ),
-                          backgroundColor: Colors.white, // Warna putih untuk tombol
+                          backgroundColor: Colors.white,
                         ),
                         child: const Text(
-                          "Login",
+                          "Register",
                           style: TextStyle(
                             fontSize: 18,
-                            color: Color(0xFF4F75FF), // Warna teks biru
+                            color: Color(0xFF4F75FF),
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                        );
-                      },
-                      child: const Text(
-                        "Don't have an account? Register here.",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    )
-
                   ],
                 ),
-                const Spacer(), // Spacer untuk menambahkan ruang kosong di bawah
+                const Spacer(),
               ],
             ),
           ),

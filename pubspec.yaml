@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.0.0 # Use a more recent version of flutter_svg
+  intl: ^0.18.0
+
 
 dev_dependencies:
   flutter_test:
@@ -27,3 +29,5 @@ flutter:
     - assets/images/OnBoarding 2.svg
     - assets/images/OnBoarding 3.svg
     - assets/images/Navigation Login Register.svg
+
+
