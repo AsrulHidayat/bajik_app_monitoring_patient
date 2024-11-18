@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:bajik_app_monitoring_patient/BajikApp/login.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,16 +16,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _showDatePicker(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Untuk memungkinkan ukuran penuh
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(16), // Sudut atas melengkung
+          top: Radius.circular(16),
         ),
       ),
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(16),
-          height: MediaQuery.of(context).size.height * 0.5, // Tinggi 40% layar
+          height: MediaQuery.of(context).size.height * 0.5,
           child: Column(
             children: [
               // Header
@@ -41,13 +42,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   IconButton(
                     icon: const Icon(Icons.close),
                     onPressed: () {
-                      Navigator.pop(context); // Tutup Bottom Sheet
+                      Navigator.pop(context);
                     },
                   ),
                 ],
               ),
               const Divider(),
-
               // DatePicker
               Expanded(
                 child: CalendarDatePicker(
@@ -58,7 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     setState(() {
                       _selectedDate = value;
                     });
-                    Navigator.pop(context); // Tutup Bottom Sheet
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -97,12 +97,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.pop(context); // Navigasi ke halaman sebelumnya
+                      Navigator.pop(context);
                     },
                   ),
                 ),
                 const Spacer(),
-
                 // Judul dan Deskripsi
                 const Center(
                   child: Column(
@@ -129,7 +128,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: 40),
-
                 // Field Input
                 Column(
                   children: [
@@ -152,7 +150,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.number,
                     ),
                     const SizedBox(height: 24),
-
                     // Field Nama Lengkap
                     TextField(
                       decoration: InputDecoration(
@@ -172,7 +169,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       keyboardType: TextInputType.text,
                     ),
                     const SizedBox(height: 24),
-
                     // Field Tanggal Lahir
                     InkWell(
                       onTap: () => _showDatePicker(context),
@@ -195,13 +191,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                     const SizedBox(height: 40),
-
                     // Tombol Register
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Aksi tombol register
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
@@ -221,6 +221,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 20),
+                // Text navigasi ke halaman login
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Already have an account? Log in",
+                    style: TextStyle( color: Colors.white),
+                  ),
                 ),
                 const Spacer(),
               ],
