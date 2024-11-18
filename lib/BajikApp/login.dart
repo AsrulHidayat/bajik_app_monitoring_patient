@@ -1,3 +1,4 @@
+import 'package:bajik_app_monitoring_patient/BajikApp/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bajik_app_monitoring_patient/BajikApp/register.dart';
 
@@ -32,11 +33,11 @@ class LoginScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      Navigator.pop(context); // Navigasi ke halaman sebelumnya
+                      Navigator.pop(context);
                     },
                   ),
                 ),
-                const Spacer(), // Spacer untuk mendorong konten ke tengah layar
+                const Spacer(),
 
                 // Judul dan Deskripsi
                 const Center(
@@ -113,7 +114,10 @@ class LoginScreen extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Aksi tombol login
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const HomePage()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
