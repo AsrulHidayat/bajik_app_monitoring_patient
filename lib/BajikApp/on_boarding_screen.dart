@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:bajik_app_monitoring_patient/BajikApp/login.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -152,7 +153,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          // Navigate to Login
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF4D91),
@@ -160,10 +166,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           minimumSize: const Size.fromHeight(54),
                         ),
                         child: const Text(
-                            "Login",
+                          "Login",
                           style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
