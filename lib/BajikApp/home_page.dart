@@ -62,16 +62,17 @@ class HomePage extends StatelessWidget {
 
                     // Bagian 2: Card Penyakit dan Tombol
                     Stack(
+                      clipBehavior: Clip.none, // Agar tombol di luar card tidak terpotong
                       children: [
                         // Card dengan ukuran 312 x 124
                         SizedBox(
-                          width: MediaQuery.of(context).size.width - 64, // Total padding kiri dan kanan (32 + 32)
-                          height: 124,
+                          width: MediaQuery.of(context).size.width -64, // Total padding kiri dan kanan (32 + 32)
+                          height: 132,
                           child: Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.black.withOpacity(0.1),
@@ -81,31 +82,35 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                              crossAxisAlignment: CrossAxisAlignment.center, // Menyelaraskan teks ke tengah secara horizontal
+                              children: const [
                                 Text(
                                   "PASCA OPERASI RINGAN",
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black54,
+                                    fontSize: 12, // Ukuran font 12
+                                    fontWeight: FontWeight.w300, // Ketebalan light
+                                    color: Colors.black, // Warna hitam
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                SizedBox(height: 4),
                                 Text(
                                   "Ashid Kun",
+                                  textAlign: TextAlign.center, // Rata tengah
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
                                 ),
                                 SizedBox(height: 8),
                                 Text(
                                   "Pantau kondisi kesehatan anda!",
+                                  textAlign: TextAlign.center, // Rata tengah
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Colors.black45,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black,
                                   ),
                                 ),
                               ],
@@ -115,7 +120,7 @@ class HomePage extends StatelessWidget {
 
                         // Tombol di luar Card
                         Positioned(
-                          bottom: -20,
+                          bottom: -24, // Agar tombol keluar dari card
                           left: 0,
                           right: 0,
                           child: Center(
@@ -123,17 +128,26 @@ class HomePage extends StatelessWidget {
                               onPressed: () {
                                 // Aksi tombol cek sekarang
                               },
-                              icon: const Icon(Icons.event_note),
-                              label: const Text("Cek Sekarang"),
+                              icon: const Icon(
+                                Icons.event_note,
+                                color: Colors.white, 
+                              ),
+                              label: const Text(
+                                "Cek Sekarang",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.pink,
+                                backgroundColor: Color(0xFFFF4D91),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
+                                  borderRadius: BorderRadius.circular(24),
                                 ),
                                 padding: const EdgeInsets.symmetric(
                                   vertical: 12,
                                   horizontal: 24,
                                 ),
+                                elevation: 4,
                               ),
                             ),
                           ),
