@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -158,34 +159,73 @@ class HomePage extends StatelessWidget {
                     const SizedBox(height: 40),
 
                     // Bagian 3: Tanggal
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: List.generate(7, (index) {
-                        final day = ["S", "M", "T", "W", "T", "F", "S"];
-                        final isToday = index == 1; // Contoh: hari ini Senin
-                        return Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 12,
-                          ),
-                          decoration: BoxDecoration(
-                            color: isToday ? const Color(0xFF4F75FF) : Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: isToday
-                                ? null
-                                : Border.all(color: Colors.grey.shade300),
-                          ),
-                          child: Text(
-                            day[index],
-                            style: TextStyle(
-                              color: isToday ? Colors.white : Colors.black,
-                              fontWeight:
-                              isToday ? FontWeight.bold : FontWeight.normal,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(30, (index) {
+                          final today = DateTime.now();
+                          final dayDate = today.add(Duration(days: index - today.weekday + 1));
+                          final dayName = DateFormat.E().format(dayDate).substring(0, 1); 
+                          final dayNumber = DateFormat.d().format(dayDate);
+
+                          final isToday = dayDate.day == today.day &&
+                              dayDate.month == today.month &&
+                              dayDate.year == today.year;
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 12,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isToday ? const Color(0xFF4F75FF) : Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: isToday
+                                    ? null
+                                    : Border.all(color: Colors.grey.shade300),
+                              ),
+                              child: Column(
+                                children: [
+
+                                  Text(
+                                    dayName,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: isToday ? Colors.white : Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  // Tanggal
+                                  Text(
+                                    dayNumber,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: isToday ? Colors.white : Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  // Titik putih
+                                  if (isToday)
+                                    Container(
+                                      width: 2,
+                                      height: 2,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
+                      ),
                     ),
+
                     const SizedBox(height: 24),
 
                     // Bagian 4: Checklist Minuman
