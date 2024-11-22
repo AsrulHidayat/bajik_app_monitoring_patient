@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  // List untuk status checklist card
+  List<bool> checklistStatuses = [true, false]; // Status awal checklist
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Background utama putih
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           // Bagian atas dengan background biru dan rounded
@@ -16,7 +25,7 @@ class HomePage extends StatelessWidget {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xFF5A5AFE),
+                  Color(0xFF5A5AFA),
                   Color(0xFF5FBBFD),
                 ],
                 begin: Alignment.topLeft,
@@ -63,11 +72,11 @@ class HomePage extends StatelessWidget {
 
                     // Bagian 2: Card Penyakit dan Tombol
                     Stack(
-                      clipBehavior: Clip.none, // Agar tombol di luar card tidak terpotong
+                      clipBehavior: Clip.none,
                       children: [
-                        // Card dengan ukuran 312 x 124
+                        // Card dengan ukuran dinamis
                         SizedBox(
-                          width: MediaQuery.of(context).size.width -64, // Total padding kiri dan kanan (32 + 32)
+                          width: MediaQuery.of(context).size.width - 64,
                           height: 132,
                           child: Container(
                             padding: const EdgeInsets.all(16),
@@ -83,21 +92,21 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             child: const Column(
-                              crossAxisAlignment: CrossAxisAlignment.center, // Menyelaraskan teks ke tengah secara horizontal
-                              children: const [
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
                                 Text(
                                   "PASCA OPERASI RINGAN",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 12, // Ukuran font 12
-                                    fontWeight: FontWeight.w300, // Ketebalan light
-                                    color: Colors.black, // Warna hitam
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black,
                                   ),
                                 ),
                                 SizedBox(height: 4),
                                 Text(
                                   "Ashid Kun",
-                                  textAlign: TextAlign.center, // Rata tengah
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 24,
                                     fontWeight: FontWeight.w500,
@@ -107,7 +116,7 @@ class HomePage extends StatelessWidget {
                                 SizedBox(height: 8),
                                 Text(
                                   "Pantau kondisi kesehatan anda!",
-                                  textAlign: TextAlign.center, // Rata tengah
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w300,
@@ -121,7 +130,7 @@ class HomePage extends StatelessWidget {
 
                         // Tombol di luar Card
                         Positioned(
-                          bottom: -24, // Agar tombol keluar dari card
+                          bottom: -24,
                           left: 0,
                           right: 0,
                           child: Center(
@@ -131,7 +140,7 @@ class HomePage extends StatelessWidget {
                               },
                               icon: const Icon(
                                 Icons.event_note,
-                                color: Colors.white, 
+                                color: Colors.white,
                               ),
                               label: const Text(
                                 "Cek Sekarang",
@@ -155,7 +164,6 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 40),
 
                     // Bagian 3: Tanggal
@@ -165,7 +173,7 @@ class HomePage extends StatelessWidget {
                         children: List.generate(30, (index) {
                           final today = DateTime.now();
                           final dayDate = today.add(Duration(days: index - today.weekday + 1));
-                          final dayName = DateFormat.E().format(dayDate).substring(0, 1); 
+                          final dayName = DateFormat.E().format(dayDate).substring(0, 1);
                           final dayNumber = DateFormat.d().format(dayDate);
 
                           final isToday = dayDate.day == today.day &&
@@ -188,7 +196,6 @@ class HomePage extends StatelessWidget {
                               ),
                               child: Column(
                                 children: [
-
                                   Text(
                                     dayName,
                                     style: TextStyle(
@@ -198,7 +205,6 @@ class HomePage extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  // Tanggal
                                   Text(
                                     dayNumber,
                                     style: TextStyle(
@@ -207,17 +213,6 @@ class HomePage extends StatelessWidget {
                                       color: isToday ? Colors.white : Colors.black,
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
-                                  // Titik putih
-                                  if (isToday)
-                                    Container(
-                                      width: 2,
-                                      height: 2,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                      ),
-                                    ),
                                 ],
                               ),
                             ),
@@ -225,33 +220,44 @@ class HomePage extends StatelessWidget {
                         }),
                       ),
                     ),
-
                     const SizedBox(height: 24),
 
-                    // Bagian 4: Checklist Minuman
+                    // Bagian 4: Checklist
                     const Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         "Checklist Minuman Anda",
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    _buildHorizontalCard(
-                      icon: Icons.medical_services,
-                      title: "Paracetamol",
-                      subtitle: "Hari ini, 08.00 Pagi",
-                      isChecked: true,
-                    ),
-                    const SizedBox(height: 16),
-                    _buildHorizontalCard(
-                      icon: Icons.medical_services,
-                      title: "Anti Depressant",
-                      subtitle: "Hari ini, 12.00 Siang",
-                      isChecked: false,
+
+                    // Dynamic Checklist Cards
+                    Column(
+                      children: List.generate(
+                        checklistStatuses.length,
+                            (index) => GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              checklistStatuses[index] = !checklistStatuses[index];
+                            });
+                          },
+                          child: _buildHorizontalCard(
+                            iconAsset: index == 0
+                                ? 'assets/icons/pills 1.svg'
+                                : 'assets/icons/Antidepressant.svg',
+                            title: index == 0 ? "Paracetamol" : "Anti Depressant",
+                            subtitle: index == 0
+                                ? "Hari ini, 08.00 Pagi"
+                                : "Hari ini, 12.00 Siang",
+                            isChecked: checklistStatuses[index],
+                            isGreenBackground: index == 1,
+                          ),
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 24),
 
@@ -275,7 +281,6 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      // Bagian 6: Navbar
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
@@ -291,63 +296,86 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Widget Card Checklist
+  // Card Checklist
   Widget _buildHorizontalCard({
-    required IconData icon,
+    required String iconAsset,
     required String title,
     required String subtitle,
     required bool isChecked,
+    required bool isGreenBackground, // Menambahkan parameter untuk menentukan warna
   }) {
     return Container(
       padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        color: isGreenBackground ? Color(0xFFFFF9E4) : Color(0xFFFFEDEF), // Ubah warna latar belakang menjadi hijau jika isGreenBackground
+        boxShadow: [],
       ),
       child: Row(
         children: [
-          Icon(icon, size: 32, color: const Color(0xFF4F75FF)),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(color: Colors.grey.shade600),
-                ),
-              ],
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              shape: BoxShape.rectangle,
+            ),
+            child: SvgPicture.asset(
+              iconAsset,
+              width: 48,
+              height: 48,
             ),
           ),
-          isChecked
-              ? const Icon(Icons.check_circle, color: Colors.green)
-              : const Icon(Icons.circle_outlined, color: Colors.grey),
+          const SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black38,
+                ),
+              ),
+            ],
+          ),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                isChecked = !isChecked;
+              });
+            },
+            child: Icon(
+              isChecked ? Icons.check_circle : Icons.circle_outlined,
+              size: 32,
+              color: isChecked ? Colors.green : Colors.blueGrey,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  // Widget Card Pengukuran
+
+
+  // Card untuk pengukuran hari ini
   Widget _buildMeasurementCard() {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
         color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -358,22 +386,39 @@ class HomePage extends StatelessWidget {
       ),
       child: const Row(
         children: [
-          const Icon(Icons.water_drop, size: 32, color: Colors.blue),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  "1.500 / 2.000 ml",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 4),
-                Text("Tambahkan 250 ml"),
-              ],
-            ),
+          Icon(
+            Icons.access_alarm,
+            size: 48,
+            color: Color(0xFF4F75FF),
           ),
-          const Icon(Icons.local_drink, size: 32, color: Colors.blue),
+          SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Tekanan Darah",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                "140/90 mmHg",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          Spacer(),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 20,
+            color: Colors.black,
+          ),
         ],
       ),
     );
