@@ -248,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                           child: _buildHorizontalCard(
                             iconAsset: index == 0
                                 ? 'assets/icons/pills 1.svg'
-                                : 'assets/icons/Antidepressant.svg',
+                                : 'assets/icons/antidepressant.svg',
                             title: index == 0 ? "Paracetamol" : "Anti Depressant",
                             subtitle: index == 0
                                 ? "Hari ini, 08.00 Pagi"
@@ -256,6 +256,7 @@ class _HomePageState extends State<HomePage> {
                             isChecked: checklistStatuses[index],
                             isGreenBackground: index == 1,
                           ),
+
                         ),
                       ),
                     ),
